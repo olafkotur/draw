@@ -1,6 +1,36 @@
 import { game } from '../config';
 
+const p = `
+-1-0/
+0-01/
+0010/
+-11-/
+`;
+
 export const PatternService = {
+
+  translatePattern: (raw: string): number[][] => {
+    const pattern: number[][] = [];
+
+    let temp: number[] = [];
+    for (let i = 0; i < raw.length; i++) {
+      if (raw[i] === '1') {
+        temp.push(1);
+      }
+      else if (raw[i] === '0') {
+        temp.push(0);
+      }
+      else if (raw[i] === '-') {
+        temp.push(-1);
+      }
+      else if (raw[i] === '/') {
+        pattern.push(temp);
+        temp = [];
+      }
+    }
+
+    return pattern;
+  },
 
   calculateGameCanvas: (height: number, width: number): number[][] => {
     const pattern: number[][] = [];

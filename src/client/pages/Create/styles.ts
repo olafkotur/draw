@@ -9,6 +9,6 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: theme.primary,
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
   },
 });
