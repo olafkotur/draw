@@ -12,7 +12,8 @@ export default StyleSheet.create({
 
   text: {
     fontSize: 12,
-    color: theme.white
+    color: theme.white,
+    marginTop: 10,
   },
 
   colorContainer: {

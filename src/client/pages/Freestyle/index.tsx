@@ -18,6 +18,7 @@ interface IProps {
 }
 
 interface IState {
+  color: string;
 }
 
 export default class Home extends React.Component<IProps> {  
@@ -30,6 +31,7 @@ export default class Home extends React.Component<IProps> {
   };
 
   state: IState = {
+    color: theme.secondary
   };
 
   getChallengePattern = (): number[][] => {
@@ -37,7 +39,7 @@ export default class Home extends React.Component<IProps> {
   };
 
   handleColorChanged = (color: string) => {
-
+    this.setState({ color });
   };
   
   handleExit = () => {
@@ -50,11 +52,14 @@ export default class Home extends React.Component<IProps> {
 
         <StatusBar barStyle='light-content' />
 
-        <Canvas pattern={ this.getChallengePattern() } />
-
-        <ColorPicker
-          handleColorChanged={ this.handleColorChanged }
+        <Canvas 
+          pattern={ this.getChallengePattern() }
+          color={ this.state.color }
         />
+
+        <View style={ styles.colorContainer }>
+          <ColorPicker handleColorChanged={ this.handleColorChanged } />
+        </View>
 
         {/* Bottom left information */}
         <View style={ styles.bottomLeftInfo } >

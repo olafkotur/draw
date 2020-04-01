@@ -1,32 +1,35 @@
 import React from 'react';
 import styles from './styles';
 import { TouchableOpacity, View } from 'react-native';
+import { theme } from '../../../config';
 
 interface IProps {
   active?: boolean;
   disabled?: boolean;
   blank?: boolean;
   margin?: boolean;
+  color: string;
   handleTilePressed?: () => void;
 }
 
 interface IState {
   active: boolean;
-  backgroundColor: { backgroundColor: string };
+  backgroundColor: string;
 }
 
 export default class Tile extends React.Component<IProps> {  
 
   state: IState = {
     active: this.props.active ? true : false,
-    backgroundColor: this.props.active ? styles.active : styles.inactive
+    backgroundColor: this.props.active ? this.props.color : theme.white
   };
 
-  backgroundColor: { backgroundColor: string } = this.props.active ? styles.active : styles.inactive;
+  backgroundColor: string = theme.white;
 
   handleTilePressed = (): void => {
-    this.backgroundColor = !this.state.active ? styles.active : styles.inactive;
+    this.backgroundColor = !this.state.active ? this.props.color : theme.white;
     this.setState({ active: !this.state.active });
+    this.props.handleTilePressed();
   };
 
   render(): React.ReactElement {
@@ -34,7 +37,7 @@ export default class Tile extends React.Component<IProps> {
       if (!this.props.blank) {
         return (
           <TouchableOpacity 
-            style={{ ...styles.container, ...this.backgroundColor, margin: this.props.margin ? 5 : 0 }}
+            style={{ ...styles.container, backgroundColor: this.backgroundColor, margin: this.props.margin ? 5 : 0 }}
             onPress={ this.handleTilePressed }
           />
         );

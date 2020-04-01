@@ -51,9 +51,7 @@ export default class ColorPicker extends React.Component<IProps> {
   render(): JSX.Element {
     return (
       <View style={ styles.container } >
-
-        <Text style={ styles.text } >choose a color</Text>
-
+        
         <View style={ styles.colorContainer } >
           { this.colorItems }
         </View>

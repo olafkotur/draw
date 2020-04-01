@@ -17,6 +17,12 @@ export default StyleSheet.create({
     fontSize: 14
   },
 
+  colorContainer: {
+    position: 'absolute',
+    alignSelf: 'center',
+    bottom: 25 + 30 + 15
+  },
+
   bottomLeftInfo: {
     flexDirection: 'row',
     alignSelf: 'flex-start',

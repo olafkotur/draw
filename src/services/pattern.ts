@@ -51,7 +51,7 @@ export const PatternService = {
 
   calculateFreestyleCanvas: (height: number, width: number): number[][] => {
     const pattern: number[][] = [];
-    const cols: number = Math.round(height * 0.6 / game.tileSize);
+    const cols: number = Math.round(height * 0.8 / game.tileSize);
     const rows: number = Math.round(width * 0.95 / game.tileSize);
 
     // Make an array with a pattern
