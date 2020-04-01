@@ -5,7 +5,7 @@ import SafeAreaView from '../../components/SafeAreaView';
 import Canvas from '../../components/Canvas';
 import { IPlayerData, IGameInfo, IGuessData } from '../../../models';
 import Text from '../../components/Text';
-import { game } from '../../../config';
+import { game, theme } from '../../../config';
 import GuessButtons from '../../components/GuessButtons';
 import { PatternService } from '../../../services/pattern';
 
@@ -100,7 +100,10 @@ export default class Challenge extends React.Component<IProps> {
 
         <StatusBar barStyle='light-content' />
 
-        <Canvas pattern={ this.getChallengePattern() } />
+        <Canvas
+          pattern={ this.getChallengePattern() }
+          color={ theme.secondary }
+        />
 
         {/* Player information */}
         <View style={ styles.versusContainer }>

@@ -2,7 +2,6 @@ import React from 'react';
 import styles from './styles';
 import { View, Dimensions, TouchableOpacity } from 'react-native';
 import Tile from '../Tile';
-import { PatternService } from '../../../services/pattern';
 import { game, theme } from '../../../config';
 
 interface IProps {

@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, TouchableOpacity }  from 'react-native';
 import styles from './styles';
-import Text from '../Text';
 import { theme } from '../../../config';
 
 interface IProps {
@@ -51,7 +50,7 @@ export default class ColorPicker extends React.Component<IProps> {
   render(): JSX.Element {
     return (
       <View style={ styles.container } >
-        
+
         <View style={ styles.colorContainer } >
           { this.colorItems }
         </View>

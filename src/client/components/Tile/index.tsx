@@ -1,7 +1,6 @@
 import React from 'react';
 import styles from './styles';
 import { TouchableOpacity, View } from 'react-native';
-import { theme } from '../../../config';
 
 interface IProps {
   col: number;

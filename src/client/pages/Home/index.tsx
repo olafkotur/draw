@@ -10,7 +10,6 @@ import { Header } from 'react-native/Libraries/NewAppScreen';
 import { logoPattern } from '../../../patterns';
 import { IPlayerData } from '../../../models';
 import { StorageService } from '../../../services/storage';
-import { theme } from '../../../config';
 import { MiscService } from '../../../services/misc';
 
 interface IProps {

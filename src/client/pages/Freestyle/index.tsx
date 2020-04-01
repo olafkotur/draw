@@ -5,11 +5,6 @@ import styles from './styles';
 import Canvas from '../../components/Canvas';
 import { PatternService } from '../../../services/pattern';
 import Text from '../../components/Text';
-import Score from '../../components/Score';
-import { Header } from 'react-native/Libraries/NewAppScreen';
-import { logoPattern } from '../../../patterns';
-import { IPlayerData } from '../../../models';
-import { StorageService } from '../../../services/storage';
 import { theme } from '../../../config';
 import ColorPicker from '../../components/ColorPicker';
 
@@ -59,7 +54,7 @@ export default class Home extends React.Component<IProps> {
 
         <StatusBar barStyle='light-content' />
 
-        <Canvas 
+        <Canvas
           pattern={ this.getFreestylePattern() }
           color={ this.state.color }
           handleTilePressed={ this.handleTilePressed }
