@@ -7,5 +7,6 @@ export const theme = {
 };
 
 export const game = {
-  tileSize: 30
+  tileSize: 30,
+  length: 300,
 }

@@ -6,24 +6,23 @@ const width: number = Dimensions.get('window').width;
 
 export default StyleSheet.create({
   container: {
-    flexDirection: 'row',
+    width: width * 0.9,
+    height: height * 0.08,
     justifyContent: 'center',
-    marginBottom: 10,
+    marginVertical: 10,
+    flexDirection: 'row'
   },
 
-  scoreText: {
-    fontSize: 20,
-    color: theme.white,
-    paddingRight: 3
+  cardContainer: {
+    width: (width * 0.3) - 5,
+    height: '100%',
+    marginHorizontal: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10
   },
 
-  scoreGroup: {
-    flexDirection: 'row',
-    padding: 20
-  },
-
-  icon: {
-    width: 20,
-    height: 20
+  cardText: {
+    fontSize: 16
   }
 });

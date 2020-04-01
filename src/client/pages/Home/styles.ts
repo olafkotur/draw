@@ -9,7 +9,7 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: theme.primary,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-end'
   },
 
   gameInfoContainer: {
@@ -32,13 +32,22 @@ export default StyleSheet.create({
     fontFamily: 'Courier'
   },
 
-  startButton: {
+  challengeButton: {
+    width: width * 0.7,
+    backgroundColor: theme.quaternary,
+    paddingVertical: 15,
+    borderRadius: 15,
+    alignItems: 'center',
+    marginTop: 15,
+    marginBottom: 15
+  },
+
+  freestyleButton: {
     width: width * 0.7,
     backgroundColor: theme.tertiary,
     paddingVertical: 15,
     borderRadius: 15,
     alignItems: 'center',
-    marginTop: 20,
     marginBottom: 50
   },
 
