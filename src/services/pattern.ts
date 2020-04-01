@@ -67,18 +67,17 @@ export const PatternService = {
   },
 
   debugPrintPattern: (pattern: number[][]): void => {
-    console.log(pattern.length, pattern[0].length);
     pattern.forEach((col: number[]) => {
       let temp: string = '';
       col.forEach((row: number) => {
         if (row === 1) {
-          temp += ' 1';
+          temp += ' [1]';
         }
         else if (row === 0) {
-          temp += ' 0';
+          temp += ' [0]';
         }
         else {
-          temp += ' -';
+          temp += ' [-]';
         }
       });
       console.log(temp);

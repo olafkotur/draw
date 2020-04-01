@@ -10,6 +10,8 @@ import { Header } from 'react-native/Libraries/NewAppScreen';
 import { logoPattern } from '../../../patterns';
 import { IPlayerData } from '../../../models';
 import { StorageService } from '../../../services/storage';
+import { theme } from '../../../config';
+import { MiscService } from '../../../services/misc';
 
 interface IProps {
   navigation: any;
@@ -22,7 +24,7 @@ interface IState {
 export default class Home extends React.Component<IProps> {  
   constructor(props: IProps) {
     super(props);
-    this.logoPattern =  PatternService.translatePattern(logoPattern);
+    this.logoPattern = PatternService.translatePattern(logoPattern);
   }
 
   static navigationOptions = {
@@ -70,6 +72,7 @@ export default class Home extends React.Component<IProps> {
 
             <Canvas
               pattern={ this.logoPattern }
+              color={ MiscService.getRandomColor() }
               size={ 5 } 
               margin
             />
