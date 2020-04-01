@@ -6,7 +6,7 @@ import { PatternService } from '../../../services/pattern';
 import { game } from '../../../config';
 
 interface IProps {
-  pattern?: number[][];
+  pattern: number[][];
   size?: number;
   margin?: boolean;
 }
@@ -14,20 +14,14 @@ interface IProps {
 export default class Canvas extends React.Component<IProps> {  
   constructor(props: IProps) {
     super(props);
-    this.pattern = this.props.pattern ? this.props.pattern : this.getGamePattern();
     this.generateTiles();
   }
 
-  pattern: number[][];
   tiles: JSX.Element[] = [];
   width: any = { width: this.props.size ? (this.props.size * game.tileSize) + (this.props.size * 5 - 1): '100%' }
 
-  getGamePattern = (): number[][] => {
-    return PatternService.calculateGameCanvas(Dimensions.get('window').height, Dimensions.get('window').width);
-  }
-
   generateTiles = (): void => {
-    const pattern: number[][] = this.pattern;
+    const pattern: number[][] = this.props.pattern;
 
     // Generate tiles based on pattern
     pattern.forEach((col: number[]) => {

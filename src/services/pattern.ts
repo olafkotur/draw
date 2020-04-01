@@ -32,7 +32,24 @@ export const PatternService = {
     return pattern;
   },
 
-  calculateGameCanvas: (height: number, width: number): number[][] => {
+  calculateChallengeCanvas: (height: number, width: number): number[][] => {
+    const pattern: number[][] = [];
+    const cols: number = Math.round(height * 0.6 / game.tileSize);
+    const rows: number = Math.round(width * 0.95 / game.tileSize);
+
+    // Make an array with a pattern
+    for (let i = 0; i < cols; i++) {
+      const temp: number[] = [];
+      for (let j = 0; j < rows; j++) {
+        temp.push(0);
+      }
+      pattern.push(temp);
+    }
+
+    return pattern;
+  },
+
+  calculateFreestyleCanvas: (height: number, width: number): number[][] => {
     const pattern: number[][] = [];
     const cols: number = Math.round(height * 0.6 / game.tileSize);
     const rows: number = Math.round(width * 0.95 / game.tileSize);

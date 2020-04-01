@@ -1,12 +1,13 @@
 import React from 'react';
 import styles from './styles';
-import { View, StatusBar, TouchableOpacity, Image, TextInput } from 'react-native';
+import { View, StatusBar, TouchableOpacity, Image, TextInput, Dimensions } from 'react-native';
 import SafeAreaView from '../../components/SafeAreaView';
 import Canvas from '../../components/Canvas';
 import { IPlayerData, IGameInfo, IGuessData } from '../../../models';
 import Text from '../../components/Text';
 import { game } from '../../../config';
 import GuessButtons from '../../components/GuessButtons';
+import { PatternService } from '../../../services/pattern';
 
 interface IProps {
   navigation: any;
@@ -66,6 +67,10 @@ export default class Challenge extends React.Component<IProps> {
     }
   };
 
+  getChallengePattern = (): number[][] => {
+    return PatternService.calculateChallengeCanvas(Dimensions.get('window').height, Dimensions.get('window').width);
+  };
+
   handleLiked = (guessData: IGuessData) => {
     const temp: IGuessData[] = this.state.guessData;
     this.state.guessData.forEach((data: IGuessData, i: number) => {
@@ -95,7 +100,7 @@ export default class Challenge extends React.Component<IProps> {
 
         <StatusBar barStyle='light-content' />
 
-        <Canvas />
+        <Canvas pattern={ this.getChallengePattern() } />
 
         {/* Player information */}
         <View style={ styles.versusContainer }>
