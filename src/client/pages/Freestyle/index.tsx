@@ -65,7 +65,7 @@ export default class Home extends React.Component<IProps> {
         </View>
 
         {/* Bottom left information */}
-        <View style={ styles.bottomLeftInfo } >
+        {/* <View style={ styles.bottomLeftInfo } >
           <TouchableOpacity
             style={{ ...styles.bottomLeftButton, backgroundColor: theme.secondary }}
             onPress={ this.handleExit } >
@@ -77,7 +77,7 @@ export default class Home extends React.Component<IProps> {
             onPress={ this.handleExit } >
             <Text style={ styles.text } >delete</Text>
           </TouchableOpacity>
-        </View>
+        </View> */}
 
         {/* Exit button */}
         <TouchableOpacity
