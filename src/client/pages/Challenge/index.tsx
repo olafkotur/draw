@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './styles';
-import { View, StatusBar, TouchableOpacity, Image, TextInput, Dimensions } from 'react-native';
+import { View, StatusBar, TouchableOpacity, Image, TextInput, Dimensions, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import SafeAreaView from '../../components/SafeAreaView';
 import Canvas from '../../components/Canvas';
 import { IPlayerData, IGameInfo, IGuessData } from '../../../models';
@@ -11,6 +11,7 @@ import { PatternService } from '../../../services/pattern';
 import Loading from '../../components/Loading';
 import delay from 'delay';
 import { MiscService } from '../../../services/misc';
+import { KeyboardAwareView } from 'react-native-keyboard-aware-view';
 
 interface IProps {
   navigation: any;
@@ -18,6 +19,7 @@ interface IProps {
 
 interface IState {
   isLoading: boolean;
+  isCanvasHidden: boolean;
   formattedTime: string;
   guessData: IGuessData[];
   guess: string;
@@ -30,6 +32,7 @@ export default class Challenge extends React.Component<IProps> {
     this.gameInfo = { type: 'artist', opponentName: 'grass-hopper', taskName: 'heart', pointsAwarded: 15 };
     this.timeRemaining = game.length;
     this.state.guessData = [{ value: '-', isLiked: false }, { value: '-', isLiked: false }, { value: '-', isLiked: false }];
+    this.pattern = PatternService.calculateChallengeCanvas(Dimensions.get('window').height, Dimensions.get('window').width);
   }
 
   static navigationOptions = {
@@ -38,40 +41,42 @@ export default class Challenge extends React.Component<IProps> {
 
   playerData: IPlayerData;
   gameInfo: IGameInfo;
+  pattern: number[][];
   timeRemaining: number;
 
   state: IState = {
     isLoading: true,
+    isCanvasHidden: false,
     formattedTime: '5:00',
     guessData: [],
     guess: ''
   };
 
-  componentDidMount = async () => {
-    await delay(Math.floor(Math.random() * 2500) + 1000);
-    this.startTimer();
+  componentDidMount = async (): Promise<void> => {
+    // await delay(Math.floor(Math.random() * 2500) + 1000);
     this.setState({ isLoading: false });
+    this.startTimer();
   }
 
   startTimer = async (): Promise<void> => {
     this.timeRemaining -= 1;
     this.setState({ formattedTime: MiscService.formatTime(this.timeRemaining) });
-    await delay(1000);
-    if (this.timeRemaining > 0) this.startTimer();
+    
+    if (this.timeRemaining > 0) {
+      await delay(1000);
+      this.startTimer();
+    }
   };
 
-  getChallengePattern = (): number[][] => {
-    return PatternService.calculateChallengeCanvas(Dimensions.get('window').height, Dimensions.get('window').width);
+  handleHideCanvas = (): void => {
+    this.setState({ isCanvasHidden: !this.state.isCanvasHidden });
   };
 
-  handleLiked = (guessData: IGuessData) => {
-    const temp: IGuessData[] = this.state.guessData;
-    this.state.guessData.forEach((data: IGuessData, i: number) => {
-      if (data.value == guessData.value) {
-        temp[i].isLiked = !guessData.isLiked;
-      }
-    });
-    this.setState({ guessData: temp });
+  handleLiked = (guessData: IGuessData, position: number): void => {
+    if (guessData.value !== '-') {
+      this.state.guessData[position].isLiked = !guessData.isLiked;
+      this.setState({});
+    }
   };
 
   handleGuessSend = (): void => {
@@ -82,86 +87,100 @@ export default class Challenge extends React.Component<IProps> {
     this.setState({ guessData });
   };
 
-  handleExit = () => {
+  handleExit = (): void => {
     this.timeRemaining = 0;
     this.props.navigation.replace('Home');
   };
 
   render(): React.ReactElement {
     if (!this.state.isLoading) {
-      return (
-        <SafeAreaView style={ styles.container } >
+      return (          
+        <TouchableWithoutFeedback onPress={ Keyboard.dismiss } >
+          
+          <KeyboardAvoidingView 
+            behavior={ Platform.OS == 'ios' ? 'padding' : 'height' }
+            style={{ flex: 1 }} >
 
-          <StatusBar barStyle='light-content' />
+            <SafeAreaView style={ styles.container } >
 
-          <Canvas
-            pattern={ this.getChallengePattern() }
-            color={ theme.secondary }
-          />
+              <StatusBar barStyle='light-content' />
 
-          {/* Player information */}
-          <View style={ styles.versusContainer }>
-            <Text style={ styles.playerNameText } >{ this.playerData.nickName }</Text>
-            <Text style={ styles.versusText }>VS</Text>
-            <Text style={ styles.opponentNameText }>{ this.gameInfo.opponentName }</Text>
-          </View>
+              <View style={{ display: this.state.isCanvasHidden ? 'none' : 'flex' }}>
+                <Canvas
+                  pattern={ this.pattern }
+                  color={ theme.secondary }
+                />
+              </View>
 
-          {/* Guess Cards */}
-          <View style={ styles.guessContainer } >
-            <Text style={ styles.text } >tap to like</Text>
-            <GuessButtons 
-              data={ this.state.guessData }
-              handleLiked={ this.handleLiked }
-            />
-          </View>
+              {/* Player information */}
+              <View style={ styles.versusContainer }>
+                <Text style={ styles.playerNameText } >{ this.playerData.nickName }</Text>
+                <Text style={ styles.versusText }>VS</Text>
+                <Text style={ styles.opponentNameText }>{ this.gameInfo.opponentName }</Text>
+              </View>
 
-          {/* Guess Input */}
-          <Text style={ styles.guessText } >enter your guess...</Text>
-          <View style={ styles.guessInputContainer }>
-            <TextInput
-              style={ styles.guessInput }
-              value={ this.state.guess }
-              onChangeText={ (e: string): void => this.setState({ guess: e }) }
-              placeholder={ 'pooper-scooper' }
-              autoCapitalize={ 'none' }
-              underlineColorAndroid={'rgba(0,0,0,0)'}
-              placeholderTextColor={'#c0c0c0'}
-              maxLength={ 16 }
-            />
+              {/* Guess Cards */}
+              <View style={ styles.guessContainer } >
+                <Text style={ styles.text } >tap to like</Text>
+                <GuessButtons 
+                  data={ this.state.guessData }
+                  handleLiked={ this.handleLiked }
+                />
+              </View>
 
-            <TouchableOpacity
-              style={ styles.guessSendButton }
-              onPress={ this.handleGuessSend } >
-              <Text style={ styles.text } >send</Text>
-            </TouchableOpacity>
-          </View>
+              {/* Guess Input */}
+              <Text style={ styles.guessText } >enter your guess...</Text>
+              <View style={ styles.guessInputContainer }>
+                <TextInput
+                  style={ styles.guessInput }
+                  value={ this.state.guess }
+                  onChangeText={ (e: string): void => this.setState({ guess: e }) }
+                  placeholder={ 'pooper-scooper' }
+                  autoCapitalize={ 'none' }
+                  underlineColorAndroid={'rgba(0,0,0,0)'}
+                  placeholderTextColor={'#c0c0c0'}
+                  maxLength={ 16 }
+                  onFocus={ this.handleHideCanvas }
+                  onEndEditing={ this.handleHideCanvas }
+                />
 
-          {/* Bottom left information */}
-          <View style={ styles.bottomLeftInfo } >
-            <View
-              style={ styles.taskInfoContainer } >
-              <Text style={ styles.text } >{ this.gameInfo.taskName }</Text>
-            </View>
+                <TouchableOpacity
+                  style={ styles.guessSendButton }
+                  onPress={ this.handleGuessSend } >
+                  <Text style={ styles.text } >send</Text>
+                </TouchableOpacity>
+              </View>
 
-            <Text style={ styles.text } >{ this.gameInfo.pointsAwarded }</Text>
-            <Image
-              style={ styles.typeIcon }
-              source={ this.gameInfo.type === 'artist' ? require('../../../../assets/icons/brush.png') : require('../../../../assets/icons/brush.png') }
-            />
-          </View>
+              {/* Bottom left information */}
+              <View style={ styles.bottomLeftInfo } >
+                <View
+                  style={ styles.taskInfoContainer } >
+                  <Text style={ styles.text } >{ this.gameInfo.taskName }</Text>
+                </View>
 
-          {/* Bottom right information */}
-          <View style={ styles.bottomRightInfo } >
-            <Text style={ styles.text } >{ this.state.formattedTime }</Text>
+                <Text style={ styles.text } >{ this.gameInfo.pointsAwarded }</Text>
+                <Image
+                  style={ styles.typeIcon }
+                  source={ this.gameInfo.type === 'artist' ? require('../../../../assets/icons/brush.png') : require('../../../../assets/icons/brush.png') }
+                />
+              </View>
 
-            <TouchableOpacity
-              style={ styles.exitButton }
-              onPress={ this.handleExit } >
-              <Text style={ styles.text } >exit</Text>
-            </TouchableOpacity>
-          </View>
+              {/* Bottom right information */}
+              <View style={ styles.bottomRightInfo } >
+                <Text style={ styles.text } >{ this.state.formattedTime }</Text>
 
-        </SafeAreaView>
+                <TouchableOpacity
+                  style={ styles.exitButton }
+                  onPress={ this.handleExit } >
+                  <Text style={ styles.text } >exit</Text>
+                </TouchableOpacity>
+              </View>
+
+            </SafeAreaView>
+
+          </KeyboardAvoidingView>
+
+        </TouchableWithoutFeedback>
       );
     } else {
       return <Loading />

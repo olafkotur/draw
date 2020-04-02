@@ -1,4 +1,4 @@
-import { theme } from '../config';
+import { theme, game } from '../config';
 
 export const MiscService = {
   getRandomColor: (): string => {
@@ -13,4 +13,7 @@ export const MiscService = {
     return seconds < 10 ? `${minutes}:0${seconds}` : `${minutes}:${seconds}`;
   },
 
+  calculateCanvasHeight: (size: number, margin: number): number => {
+    return (size * game.tileSize) + (size * margin);
+  },
 };

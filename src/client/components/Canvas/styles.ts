@@ -5,10 +5,10 @@ const height: number = Dimensions.get('window').height;
 const width: number = Dimensions.get('window').width;
 
 export default StyleSheet.create({
-  container: {
+  container: {    
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
-    maxWidth: width * 0.95
+    maxWidth: width * 0.95,
   },
 });

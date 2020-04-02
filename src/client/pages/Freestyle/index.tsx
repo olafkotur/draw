@@ -36,15 +36,15 @@ export default class Home extends React.Component<IProps> {
     return PatternService.calculateFreestyleCanvas(Dimensions.get('window').height, Dimensions.get('window').width);
   };
 
-  handleColorChanged = (color: string) => {
+  handleColorChanged = (color: string): void => {
     this.setState({ color });
   };
 
-  handleTilePressed = (col: number, row: number, symbol: number) => {
+  handleTilePressed = (col: number, row: number, symbol: number): void => {
     this.pattern[col][row] = symbol;
   };
   
-  handleExit = () => {
+  handleExit = (): void => {
     this.props.navigation.replace('Home');
   };
 

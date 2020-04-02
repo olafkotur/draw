@@ -24,7 +24,7 @@ export default class Canvas extends React.Component<IProps> {
 
   pattern: number[][];
   tiles: JSX.Element[] = [];
-  width: any = { width: this.props.size ? (this.props.size * game.tileSize) + (this.props.size * 5 - 1): '100%' };
+  width: any = { width: this.props.size ? (this.props.size * game.tileSize) + (this.props.size * (this.props.margin - 1)): '100%' };
 
   componentDidMount() {
     if (this.props.cycleColors) {

@@ -9,7 +9,7 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: theme.primary,
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    justifyContent: 'flex-start'
   },
 
   versusContainer: {
@@ -58,7 +58,7 @@ export default StyleSheet.create({
   },
 
   guessInputContainer: {
-    flexDirection: 'row',
+    flexDirection: 'row'
   },
 
   guessText: {
@@ -70,12 +70,13 @@ export default StyleSheet.create({
 
   guessInput: {
     width: width * 0.7,
-    backgroundColor: theme.white,
+    backgroundColor: theme.red,
     paddingVertical: Platform.OS === 'ios' ? 18 : 15,
     borderRadius: 15,
     marginTop: 5,
     paddingLeft: 20,
-    fontFamily: 'Courier'
+    fontFamily: 'Courier',
+    color: theme.white
   },
 
   guessSendButton: {

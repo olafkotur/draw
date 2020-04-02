@@ -12,6 +12,7 @@ import { IPlayerData } from '../../../models';
 import { StorageService } from '../../../services/storage';
 import { MiscService } from '../../../services/misc';
 import Loading from '../../components/Loading';
+import { KeyboardAwareView } from 'react-native-keyboard-aware-view';
 
 interface IProps {
   navigation: any;
@@ -59,13 +60,12 @@ export default class Home extends React.Component<IProps> {
 
   render(): JSX.Element {
     return (
-      <KeyboardAvoidingView
-        style={{ flex: 1 }}
-        behavior={ Platform.OS == 'ios' ? 'padding' : 'height' }
-        keyboardVerticalOffset={ Header.HEIGHT + 25 } >
+      <TouchableWithoutFeedback onPress={ Keyboard.dismiss } >
 
-        <TouchableWithoutFeedback onPress={ Keyboard.dismiss } >
-        
+        <KeyboardAvoidingView
+          behavior={ Platform.OS == "ios" ? "padding" : "height" }
+          style={{ flex: 1 }} >
+
           <SafeAreaView style={ styles.container } >
 
             <StatusBar barStyle='light-content' />
@@ -114,9 +114,9 @@ export default class Home extends React.Component<IProps> {
 
           </SafeAreaView>
 
-        </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
 
-      </KeyboardAvoidingView>
+      </TouchableWithoutFeedback>
     );
   } 
 }
