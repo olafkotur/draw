@@ -1,9 +1,13 @@
-import { theme } from '../config';
+import { theme, game } from '../config';
 
-export const MiscService = {
+export const HelperService = {
+  getRandomNumber: (min: number, max: number): number => {
+    return Math.floor(Math.random() * (max)) + min;
+  },
+
   getRandomColor: (): string => {
     const options: string[] = [theme.blue, theme.purple, theme.red, theme.yellow, theme.secondary, theme.tertiary, theme.quaternary];
-    const random: number = Math.floor(Math.random() * options.length) + 0;
+    const random: number = HelperService.getRandomNumber(0, options.length - 1);
     return options[random];
   },
 
@@ -13,4 +17,7 @@ export const MiscService = {
     return seconds < 10 ? `${minutes}:0${seconds}` : `${minutes}:${seconds}`;
   },
 
+  calculateCanvasHeight: (size: number, margin: number): number => {
+    return (size * game.tileSize) + (size * margin);
+  },
 };

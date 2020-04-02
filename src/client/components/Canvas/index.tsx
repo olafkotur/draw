@@ -4,7 +4,7 @@ import { View, Dimensions, TouchableOpacity } from 'react-native';
 import Tile from '../Tile';
 import { game, theme } from '../../../config';
 import delay from 'delay';
-import { MiscService } from '../../../services/misc';
+import { HelperService } from '../../../services/helper';
 
 interface IProps {
   pattern: number[][];
@@ -24,7 +24,7 @@ export default class Canvas extends React.Component<IProps> {
 
   pattern: number[][];
   tiles: JSX.Element[] = [];
-  width: any = { width: this.props.size ? (this.props.size * game.tileSize) + (this.props.size * 5 - 1): '100%' };
+  width: any = { width: this.props.size ? (this.props.size * game.tileSize) + (this.props.size * (this.props.margin - 1)): '100%' };
 
   componentDidMount() {
     if (this.props.cycleColors) {
@@ -94,7 +94,7 @@ export default class Canvas extends React.Component<IProps> {
       row={ this.tiles[counter].props.row } 
       symbol={ this.tiles[counter].props.symbol }
       margin={ this.tiles[counter].props.margin }
-      color={ MiscService.getRandomColor() }
+      color={ HelperService.getRandomColor() }
       disabled
     />
 

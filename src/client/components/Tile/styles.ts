@@ -9,7 +9,7 @@ export default StyleSheet.create({
     width: game.tileSize,
     height: game.tileSize,
     borderWidth: 0.5,
-    borderColor: 'rgba(0, 0, 0, 0.1)'
+    borderColor: 'rgba(0, 0, 0, 0.1)',
   },
 
   active: {

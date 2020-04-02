@@ -10,8 +10,9 @@ import { Header } from 'react-native/Libraries/NewAppScreen';
 import { logo } from '../../../patterns';
 import { IPlayerData } from '../../../models';
 import { StorageService } from '../../../services/storage';
-import { MiscService } from '../../../services/misc';
+import { HelperService } from '../../../services/helper';
 import Loading from '../../components/Loading';
+import { KeyboardAwareView } from 'react-native-keyboard-aware-view';
 
 interface IProps {
   navigation: any;
@@ -59,20 +60,19 @@ export default class Home extends React.Component<IProps> {
 
   render(): JSX.Element {
     return (
-      <KeyboardAvoidingView
-        style={{ flex: 1 }}
-        behavior={ Platform.OS == 'ios' ? 'padding' : 'height' }
-        keyboardVerticalOffset={ Header.HEIGHT + 25 } >
+      <TouchableWithoutFeedback onPress={ Keyboard.dismiss } >
 
-        <TouchableWithoutFeedback onPress={ Keyboard.dismiss } >
-        
+        <KeyboardAvoidingView
+          behavior={ Platform.OS == "ios" ? "padding" : "height" }
+          style={{ flex: 1 }} >
+
           <SafeAreaView style={ styles.container } >
 
             <StatusBar barStyle='light-content' />
 
             <Canvas
               pattern={ this.logoPattern }
-              color={ MiscService.getRandomColor() }
+              color={ HelperService.getRandomColor() }
               size={ 5 } 
               margin={ 5 }
             />
@@ -90,7 +90,7 @@ export default class Home extends React.Component<IProps> {
               <TextInput
                 style={ styles.nameInput }
                 value={ this.state.playerData.nickName }
-                onChangeText={ (e: string): void => this.setState({ playerData: { ...this.state.playerData, nickName: e } }) }
+                onChangeText={ (e: string): void => this.setState({ playerData: { ...this.state.playerData, nickName: e.toLowerCase() } }) }
                 placeholder={ this.defaultName }
                 autoCapitalize={ 'none' }
                 underlineColorAndroid={'rgba(0,0,0,0)'}
@@ -114,9 +114,9 @@ export default class Home extends React.Component<IProps> {
 
           </SafeAreaView>
 
-        </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
 
-      </KeyboardAvoidingView>
+      </TouchableWithoutFeedback>
     );
   } 
 }
