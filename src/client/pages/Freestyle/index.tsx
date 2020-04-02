@@ -5,11 +5,6 @@ import styles from './styles';
 import Canvas from '../../components/Canvas';
 import { PatternService } from '../../../services/pattern';
 import Text from '../../components/Text';
-import Score from '../../components/Score';
-import { Header } from 'react-native/Libraries/NewAppScreen';
-import { logoPattern } from '../../../patterns';
-import { IPlayerData } from '../../../models';
-import { StorageService } from '../../../services/storage';
 import { theme } from '../../../config';
 import ColorPicker from '../../components/ColorPicker';
 
@@ -24,6 +19,7 @@ interface IState {
 export default class Home extends React.Component<IProps> {  
   constructor(props: IProps) {
     super(props);
+    this.pattern = this.getFreestylePattern();
   }
 
   static navigationOptions = {
@@ -34,12 +30,18 @@ export default class Home extends React.Component<IProps> {
     color: theme.secondary
   };
 
-  getChallengePattern = (): number[][] => {
+  pattern: number[][];
+
+  getFreestylePattern = (): number[][] => {
     return PatternService.calculateFreestyleCanvas(Dimensions.get('window').height, Dimensions.get('window').width);
   };
 
   handleColorChanged = (color: string) => {
     this.setState({ color });
+  };
+
+  handleTilePressed = (col: number, row: number, symbol: number) => {
+    this.pattern[col][row] = symbol;
   };
   
   handleExit = () => {
@@ -52,9 +54,10 @@ export default class Home extends React.Component<IProps> {
 
         <StatusBar barStyle='light-content' />
 
-        <Canvas 
-          pattern={ this.getChallengePattern() }
+        <Canvas
+          pattern={ this.getFreestylePattern() }
           color={ this.state.color }
+          handleTilePressed={ this.handleTilePressed }
         />
 
         <View style={ styles.colorContainer }>
@@ -67,12 +70,6 @@ export default class Home extends React.Component<IProps> {
             style={{ ...styles.bottomLeftButton, backgroundColor: theme.secondary }}
             onPress={ this.handleExit } >
             <Text style={ styles.text } >save</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={{ ...styles.bottomLeftButton, backgroundColor: theme.tertiary }}
-            onPress={ this.handleExit } >
-            <Text style={ styles.text } >clear</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
