@@ -6,7 +6,7 @@ export interface IPlayerData {
 }
 
 export interface IGameInfo {
-  type: 'artist' | 'watcher';
+  type: string;
   opponentName: string;
   taskName: string;
   pointsAwarded: number;
@@ -16,3 +16,8 @@ export interface IGuessData {
   value: string;
   isLiked: boolean;
 };
+
+export interface IChallenge {
+  name: string;
+  points: number;
+}

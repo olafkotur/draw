@@ -70,7 +70,7 @@ export default StyleSheet.create({
 
   guessInput: {
     width: width * 0.7,
-    backgroundColor: theme.red,
+    backgroundColor: theme.white,
     paddingVertical: Platform.OS === 'ios' ? 18 : 15,
     borderRadius: 15,
     marginTop: 5,

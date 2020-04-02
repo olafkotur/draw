@@ -10,8 +10,8 @@ import GuessButtons from '../../components/GuessButtons';
 import { PatternService } from '../../../services/pattern';
 import Loading from '../../components/Loading';
 import delay from 'delay';
-import { MiscService } from '../../../services/misc';
-import { KeyboardAwareView } from 'react-native-keyboard-aware-view';
+import { HelperService } from '../../../services/helper';
+import { ChallengeService } from '../../../services/challenge';
 
 interface IProps {
   navigation: any;
@@ -29,7 +29,7 @@ export default class Challenge extends React.Component<IProps> {
   constructor(props: IProps) {
     super(props);
     this.playerData = this.props.navigation.getParam('playerData');
-    this.gameInfo = { type: 'artist', opponentName: 'grass-hopper', taskName: 'heart', pointsAwarded: 15 };
+    this.gameInfo = ChallengeService.generateGameInfo();
     this.timeRemaining = game.length;
     this.state.guessData = [{ value: '-', isLiked: false }, { value: '-', isLiked: false }, { value: '-', isLiked: false }];
     this.pattern = PatternService.calculateChallengeCanvas(Dimensions.get('window').height, Dimensions.get('window').width);
@@ -47,24 +47,27 @@ export default class Challenge extends React.Component<IProps> {
   state: IState = {
     isLoading: true,
     isCanvasHidden: false,
-    formattedTime: '5:00',
+    formattedTime: '',
     guessData: [],
     guess: ''
   };
 
   componentDidMount = async (): Promise<void> => {
-    // await delay(Math.floor(Math.random() * 2500) + 1000);
+    await delay(Math.floor(Math.random() * 1500) + 750);
+    console.log(this.gameInfo);
     this.setState({ isLoading: false });
     this.startTimer();
   }
 
   startTimer = async (): Promise<void> => {
     this.timeRemaining -= 1;
-    this.setState({ formattedTime: MiscService.formatTime(this.timeRemaining) });
+    this.setState({ formattedTime: HelperService.formatTime(this.timeRemaining) });
     
     if (this.timeRemaining > 0) {
       await delay(1000);
       this.startTimer();
+    } else {
+      this.handleExit();
     }
   };
 
@@ -129,7 +132,8 @@ export default class Challenge extends React.Component<IProps> {
               </View>
 
               {/* Guess Input */}
-              <Text style={ styles.guessText } >enter your guess...</Text>
+              { this.gameInfo.type === 'watcher' ? <Text style={ styles.guessText } >enter your guess...</Text> : null }
+              { this.gameInfo.type === 'watcher' ? 
               <View style={ styles.guessInputContainer }>
                 <TextInput
                   style={ styles.guessInput }
@@ -149,7 +153,7 @@ export default class Challenge extends React.Component<IProps> {
                   onPress={ this.handleGuessSend } >
                   <Text style={ styles.text } >send</Text>
                 </TouchableOpacity>
-              </View>
+              </View> : null }
 
               {/* Bottom left information */}
               <View style={ styles.bottomLeftInfo } >

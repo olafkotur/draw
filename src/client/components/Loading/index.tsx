@@ -4,7 +4,7 @@ import { StatusBar } from 'react-native';
 import SafeAreaView from '../SafeAreaView';
 import Text from '../Text';
 import Canvas from '../Canvas';
-import { MiscService } from '../../../services/misc';
+import { HelperService } from '../../../services/helper';
 import { PatternService } from '../../../services/pattern';
 import { loading } from '../../../patterns';
 
@@ -28,7 +28,7 @@ export default class Tile extends React.Component<IProps> {
         <Text style={ styles.text }>loading...</Text>
         <Canvas
           pattern={ this.pattern }
-          color={ MiscService.getRandomColor() }
+          color={ HelperService.getRandomColor() }
           margin={ 10 }
           cycleColors
         />
