@@ -7,10 +7,11 @@ import { PatternService } from '../../../services/pattern';
 import Text from '../../components/Text';
 import Score from '../../components/Score';
 import { Header } from 'react-native/Libraries/NewAppScreen';
-import { logoPattern } from '../../../patterns';
+import { logo } from '../../../patterns';
 import { IPlayerData } from '../../../models';
 import { StorageService } from '../../../services/storage';
 import { MiscService } from '../../../services/misc';
+import Loading from '../../components/Loading';
 
 interface IProps {
   navigation: any;
@@ -23,7 +24,7 @@ interface IState {
 export default class Home extends React.Component<IProps> {  
   constructor(props: IProps) {
     super(props);
-    this.logoPattern = PatternService.translatePattern(logoPattern);
+    this.logoPattern = PatternService.translatePattern(logo);
   }
 
   static navigationOptions = {
@@ -73,7 +74,7 @@ export default class Home extends React.Component<IProps> {
               pattern={ this.logoPattern }
               color={ MiscService.getRandomColor() }
               size={ 5 } 
-              margin
+              margin={ 5 }
             />
 
             <View style={ styles.gameInfoContainer } >
