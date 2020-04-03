@@ -13,5 +13,5 @@ export const theme = {
 export const game = {
   tileSize: 30,
   length: 120,
-  playerTypes: ['artist', 'artist', 'watcher']
+  playerTypes: ['artist', 'watcher']
 };

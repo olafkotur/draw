@@ -28,23 +28,26 @@ interface IState {
 export default class Challenge extends React.Component<IProps> {  
   constructor(props: IProps) {
     super(props);
+    this.debug = false;
     this.playerData = this.props.navigation.getParam('playerData');
     this.gameInfo = ChallengeService.generateGameInfo();
     this.timeRemaining = game.length;
     this.state.guessData = [{ value: '-', isLiked: false }, { value: '-', isLiked: false }, { value: '-', isLiked: false }];
     this.pattern = PatternService.calculateChallengeCanvas(Dimensions.get('window').height, Dimensions.get('window').width);
-    this.debug = true;
+
+    this.gameInfo.type === 'artist' ? this.startGuessing() : null;
   }
 
   static navigationOptions = {
     header: null
   };
 
+  debug: boolean;
   playerData: IPlayerData;
   gameInfo: IGameInfo;
   pattern: number[][];
   timeRemaining: number;
-  debug: boolean;
+  previousGuesses: string[] = [];
 
   state: IState = {
     isLoading: true,
@@ -60,16 +63,28 @@ export default class Challenge extends React.Component<IProps> {
     this.startTimer();
   }
 
-  startTimer = async (): Promise<void> => {
+  startTimer = async (): Promise<Function> => {
     this.timeRemaining -= 1;
     this.setState({ formattedTime: HelperService.formatTime(this.timeRemaining) });
     
     if (this.timeRemaining > 0) {
       await delay(1000);
-      this.startTimer();
+      return this.startTimer();
     } else {
       this.handleExit();
     }
+  };
+
+  startGuessing = async (): Promise<Function> => {
+    if (game.length - this.timeRemaining > HelperService.getRandomNumber(10, 20)) {
+      const guess: string = ChallengeService.startGuessBot(this.gameInfo, this.previousGuesses);
+      this.previousGuesses.push(guess);
+      this.setState({ guess });
+      this.handleGuessSend();
+      console.log(guess);
+    }
+    await delay(HelperService.getRandomNumber(3000, 6000));
+    return this.startGuessing();
   };
 
   handleHideCanvas = (): void => {
@@ -96,6 +111,12 @@ export default class Challenge extends React.Component<IProps> {
     guessData.push(this.state.guessData[2]);
     guessData.push({ value: this.state.guess, isLiked: false});
     this.setState({ guessData });
+
+    // Check if the guess is a winning one
+    const hasWon: boolean = ChallengeService.checkForWin(this.gameInfo, this.state.guess);
+    if (hasWon) {
+      this.handleExit();
+    }
   };
 
   handleExit = (): void => {

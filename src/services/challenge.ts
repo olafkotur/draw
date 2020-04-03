@@ -3,6 +3,7 @@ import { IGameInfo, IChallenge } from "../models";
 import { game } from '../config';
 import { names } from '../imports/names';
 import { challenges } from '../imports/challenges';
+import { guesses } from '../imports/bot';
 
 export const ChallengeService = {
 
@@ -16,8 +17,20 @@ export const ChallengeService = {
     };
   },
 
-  startGuessBot: (): void => {
+  checkForWin: (game: IGameInfo, guess: string): boolean => {
+    if (game.taskName.includes(guess)) {
+      return true;
+    }
+    return false;
+  },
 
+
+  startGuessBot: (game: IGameInfo, previousGuesses: string[]): string => {
+    const available: string[] = guesses[game.taskName].filter((guess: string) => !previousGuesses.includes(guess));
+    if (available.length >= 1) {
+      return available[0];
+    }
+    return game.taskName;
   },
 
 };
