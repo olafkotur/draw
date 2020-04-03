@@ -34,7 +34,7 @@ export const PatternService = {
 
   calculateChallengeCanvas: (height: number, width: number): number[][] => {
     const pattern: number[][] = [];
-    const cols: number = Math.round(height * 0.65 / game.tileSize);
+    const cols: number = Math.round(height * 0.7 / game.tileSize);
     const rows: number = Math.round(width * 0.95 / game.tileSize);
 
     // Make an array with a pattern

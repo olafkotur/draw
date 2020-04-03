@@ -72,7 +72,7 @@ export default class Challenge extends React.Component<IProps> {
       await delay(1000);
       return this.startTimer();
     } else {
-      this.handleExit();
+      this.props.navigation.replace('Victory', { winType: 'not guessed', playerData: this.playerData, pattern: this.pattern });
     }
   };
 
@@ -106,8 +106,8 @@ export default class Challenge extends React.Component<IProps> {
     else if (guessData.value !== '-') {
       this.state.guessData[position].isLiked = !guessData.isLiked;
       this.setState({});
-      await delay(2000);
-      this.props.navigation.replace('Home');
+      await delay(1000);
+      this.props.navigation.replace('Victory', { winType: 'guessed', playerData: this.playerData, pattern: this.pattern });
     }
   };
 

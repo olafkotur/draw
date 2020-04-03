@@ -8,10 +8,10 @@ import { guesses } from '../imports/bot';
 export const ChallengeService = {
 
   generateGameInfo: (): IGameInfo => {
-    const challenge: IChallenge = challenges[HelperService.getRandomNumber(0, challenges.length - 1)];
+    const challenge: IChallenge = challenges[HelperService.getRandomNumber(0, challenges.length)];
     return {
       type: game.playerTypes[HelperService.getRandomNumber(0, game.playerTypes.length)],
-      opponentName: names[HelperService.getRandomNumber(0, names.length - 1)],
+      opponentName: names[HelperService.getRandomNumber(0, names.length)],
       taskName: challenge.name,
       pointsAwarded: challenge.points
     };
