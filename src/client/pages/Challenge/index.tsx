@@ -33,6 +33,7 @@ export default class Challenge extends React.Component<IProps> {
     this.timeRemaining = game.length;
     this.state.guessData = [{ value: '-', isLiked: false }, { value: '-', isLiked: false }, { value: '-', isLiked: false }];
     this.pattern = PatternService.calculateChallengeCanvas(Dimensions.get('window').height, Dimensions.get('window').width);
+    this.debug = true;
   }
 
   static navigationOptions = {
@@ -43,6 +44,7 @@ export default class Challenge extends React.Component<IProps> {
   gameInfo: IGameInfo;
   pattern: number[][];
   timeRemaining: number;
+  debug: boolean;
 
   state: IState = {
     isLoading: true,
@@ -53,8 +55,7 @@ export default class Challenge extends React.Component<IProps> {
   };
 
   componentDidMount = async (): Promise<void> => {
-    await delay(Math.floor(Math.random() * 1500) + 750);
-    console.log(this.gameInfo);
+    // await delay(Math.floor(Math.random() * 1500) + 750);
     this.setState({ isLoading: false });
     this.startTimer();
   }
@@ -75,8 +76,15 @@ export default class Challenge extends React.Component<IProps> {
     this.setState({ isCanvasHidden: !this.state.isCanvasHidden });
   };
 
+  handleTilePressed = (col: number, row: number, symbol: number): void => {
+    this.pattern[col][row] = symbol;
+  };
+
   handleLiked = (guessData: IGuessData, position: number): void => {
-    if (guessData.value !== '-') {
+    if (this.debug) {
+      PatternService.debugPrintString(this.pattern);
+    }
+    else if (guessData.value !== '-') {
       this.state.guessData[position].isLiked = !guessData.isLiked;
       this.setState({});
     }
@@ -112,6 +120,7 @@ export default class Challenge extends React.Component<IProps> {
                 <Canvas
                   pattern={ this.pattern }
                   color={ theme.secondary }
+                  handleTilePressed={ this.handleTilePressed }
                 />
               </View>
 

@@ -16,5 +16,9 @@ export const ChallengeService = {
     };
   },
 
+  startGuessBot: (): void => {
+
+  },
+
 };
 

@@ -82,6 +82,26 @@ export const PatternService = {
       });
       console.log(temp);
     });
-  }
+  },
+
+  debugPrintString: (pattern: number[][]): void => {
+    console.log('-----------');
+    let final: string = '';
+    pattern.forEach((col: number[]) => {
+      col.forEach((row: number) => {
+        if (row === 1) {
+          final += '1';
+        }
+        else if (row === 0) {
+          final += '0';
+        }
+        else if (row === -1) {
+          final += '-';
+        }
+      });
+      final += '/';
+    });
+    console.log(final);
+  },
 
 };
