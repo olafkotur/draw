@@ -35,10 +35,10 @@ export default class Score extends React.Component<IProps> {
           <Image source={ this.gamesIcon } style={ styles.icon } />
         </View>
 
-        <View style={ styles.scoreGroup } >
+        {/* <View style={ styles.scoreGroup } >
           <Text style={ styles.scoreText } >{ this.props.watcher }</Text>
           <Image source={ this.watcherIcon } style={ styles.icon } />
-        </View>
+        </View> */}
 
       </View>
     );

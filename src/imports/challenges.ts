@@ -7,6 +7,5 @@ export const challenges: IChallenge[] = [
   { name: 'table', points: 20 },
   { name: 'phone', points: 30 },
   { name: 'door', points: 20 },
-  { name: 'dog', points: 35 },
-  { name: 'car', points: 40 }
+  { name: 'dog', points: 35 }
 ];

@@ -34,7 +34,7 @@ export const PatternService = {
 
   calculateChallengeCanvas: (height: number, width: number): number[][] => {
     const pattern: number[][] = [];
-    const cols: number = Math.round(height * 0.6 / game.tileSize);
+    const cols: number = Math.round(height * 0.7 / game.tileSize);
     const rows: number = Math.round(width * 0.95 / game.tileSize);
 
     // Make an array with a pattern
@@ -82,6 +82,26 @@ export const PatternService = {
       });
       console.log(temp);
     });
-  }
+  },
+
+  debugPrintString: (pattern: number[][]): void => {
+    console.log('-----------');
+    let final: string = '';
+    pattern.forEach((col: number[]) => {
+      col.forEach((row: number) => {
+        if (row === 1) {
+          final += '1';
+        }
+        else if (row === 0) {
+          final += '0';
+        }
+        else if (row === -1) {
+          final += '-';
+        }
+      });
+      final += '/';
+    });
+    console.log(final);
+  },
 
 };

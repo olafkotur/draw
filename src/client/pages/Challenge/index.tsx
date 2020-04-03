@@ -12,6 +12,7 @@ import Loading from '../../components/Loading';
 import delay from 'delay';
 import { HelperService } from '../../../services/helper';
 import { ChallengeService } from '../../../services/challenge';
+import { drawings } from '../../../imports/bot';
 
 interface IProps {
   navigation: any;
@@ -28,6 +29,7 @@ interface IState {
 export default class Challenge extends React.Component<IProps> {  
   constructor(props: IProps) {
     super(props);
+    this.debug = false;
     this.playerData = this.props.navigation.getParam('playerData');
     this.gameInfo = ChallengeService.generateGameInfo();
     this.timeRemaining = game.length;
@@ -39,10 +41,14 @@ export default class Challenge extends React.Component<IProps> {
     header: null
   };
 
+  debug: boolean;
   playerData: IPlayerData;
   gameInfo: IGameInfo;
   pattern: number[][];
   timeRemaining: number;
+  previousGuesses: string[] = [];
+  startedGuessing: boolean = false;
+  drawing: number[][];
 
   state: IState = {
     isLoading: true,
@@ -54,35 +60,63 @@ export default class Challenge extends React.Component<IProps> {
 
   componentDidMount = async (): Promise<void> => {
     await delay(Math.floor(Math.random() * 1500) + 750);
-    console.log(this.gameInfo);
     this.setState({ isLoading: false });
     this.startTimer();
   }
 
-  startTimer = async (): Promise<void> => {
+  startTimer = async (): Promise<Function> => {
     this.timeRemaining -= 1;
     this.setState({ formattedTime: HelperService.formatTime(this.timeRemaining) });
     
     if (this.timeRemaining > 0) {
       await delay(1000);
-      this.startTimer();
+      return this.startTimer();
     } else {
-      this.handleExit();
+      this.props.navigation.replace('Victory', { winType: 'not guessed', playerData: this.playerData, pattern: this.pattern });
     }
+  };
+
+  startGuessing = async (): Promise<Function> => {
+    if (game.length - this.timeRemaining > HelperService.getRandomNumber(10, 20)) {
+      const guess: string = ChallengeService.startGuessBot(this.gameInfo, this.previousGuesses);
+      this.previousGuesses.push(guess);
+      this.setState({ guess });
+      this.handleGuessSend();
+    }
+    await delay(HelperService.getRandomNumber(3000, 8000));
+    return this.startGuessing();
   };
 
   handleHideCanvas = (): void => {
     this.setState({ isCanvasHidden: !this.state.isCanvasHidden });
   };
 
-  handleLiked = (guessData: IGuessData, position: number): void => {
-    if (guessData.value !== '-') {
+  handleTilePressed = (col: number, row: number, symbol: number): void => {
+    if (!this.startedGuessing) {
+      this.startedGuessing = true;
+      this.gameInfo.type === 'artist' ? this.startGuessing() : null;
+    }
+    this.pattern[col][row] = symbol;
+  };
+
+  handleLiked = async (guessData: IGuessData, position: number): Promise<void> => {
+    if (this.debug) {
+      PatternService.debugPrintString(this.pattern);
+    }
+    else if (guessData.value !== '-') {
       this.state.guessData[position].isLiked = !guessData.isLiked;
       this.setState({});
+      await delay(1000);
+      this.props.navigation.replace('Victory', { winType: 'guessed', playerData: this.playerData, pattern: this.pattern });
     }
   };
 
   handleGuessSend = (): void => {
+    // Skip if input is the same
+    if (this.state.guess === this.state.guessData[2].value) {
+      return;
+    }
+
     const guessData: IGuessData[] = [];
     guessData.push(this.state.guessData[1]);
     guessData.push(this.state.guessData[2]);
@@ -112,6 +146,7 @@ export default class Challenge extends React.Component<IProps> {
                 <Canvas
                   pattern={ this.pattern }
                   color={ theme.secondary }
+                  handleTilePressed={ this.handleTilePressed }
                 />
               </View>
 
@@ -124,10 +159,11 @@ export default class Challenge extends React.Component<IProps> {
 
               {/* Guess Cards */}
               <View style={ styles.guessContainer } >
-                <Text style={ styles.text } >tap to like</Text>
+                <Text style={ styles.text } >tap to select winner</Text>
                 <GuessButtons 
                   data={ this.state.guessData }
                   handleLiked={ this.handleLiked }
+                  disabled={ this.gameInfo.type === 'watcher' }
                 />
               </View>
 
@@ -159,7 +195,7 @@ export default class Challenge extends React.Component<IProps> {
               <View style={ styles.bottomLeftInfo } >
                 <View
                   style={ styles.taskInfoContainer } >
-                  <Text style={ styles.text } >{ this.gameInfo.taskName }</Text>
+                  <Text style={ styles.text } >{ this.gameInfo.type === 'artist' ? this.gameInfo.taskName : '?' }</Text>
                 </View>
 
                 <Text style={ styles.text } >{ this.gameInfo.pointsAwarded }</Text>

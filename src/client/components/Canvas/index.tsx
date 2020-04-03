@@ -12,6 +12,7 @@ interface IProps {
   size?: number;
   margin?: number;
   cycleColors?: boolean;
+  ignoreInactive?: boolean;
   handleTilePressed?: (col: number, row: number, symbol: number) => void;
 }
 
@@ -42,7 +43,7 @@ export default class Canvas extends React.Component<IProps> {
           key={ `${col}:${row}` }
           col={ col } row={ row } symbol={ newSymbol }
           color={ newSymbol === 1 ? this.props.color : theme.white }
-          blank={ row === -1 ? true : false }
+          blank={ row === -1 ? true : false || this.props.ignoreInactive && row === 0 ? true : false }
           margin={ this.props.margin ? this.props.margin : 0 }
           handleTilePressed={ this.handleTilePressed }
         />
@@ -66,10 +67,10 @@ export default class Canvas extends React.Component<IProps> {
             key={ `${i}:${j}` }
             col={ i } row={ j } symbol={ row }
             color={ row === 1 ? this.props.color : theme.white }
-            blank={ row === -1 ? true : false }
+            blank={ row === -1 ? true : false || this.props.ignoreInactive && row === 0 ? true : false }
             margin={ this.props.margin ? this.props.margin : 0 }
             handleTilePressed={ this.handleTilePressed }
-            disabled={ this.props.cycleColors ? true : false }
+            disabled={ this.props.cycleColors ? true : false || this.props.ignoreInactive ? true : false }
           />
         );
       });
