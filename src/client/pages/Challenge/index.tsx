@@ -34,8 +34,6 @@ export default class Challenge extends React.Component<IProps> {
     this.timeRemaining = game.length;
     this.state.guessData = [{ value: '-', isLiked: false }, { value: '-', isLiked: false }, { value: '-', isLiked: false }];
     this.pattern = PatternService.calculateChallengeCanvas(Dimensions.get('window').height, Dimensions.get('window').width);
-
-    this.gameInfo.type === 'artist' ? this.startGuessing() : null;
   }
 
   static navigationOptions = {
@@ -48,6 +46,7 @@ export default class Challenge extends React.Component<IProps> {
   pattern: number[][];
   timeRemaining: number;
   previousGuesses: string[] = [];
+  startedGuessing: boolean = false;
 
   state: IState = {
     isLoading: true,
@@ -83,7 +82,7 @@ export default class Challenge extends React.Component<IProps> {
       this.handleGuessSend();
       console.log(guess);
     }
-    await delay(HelperService.getRandomNumber(3000, 6000));
+    await delay(HelperService.getRandomNumber(3000, 8000));
     return this.startGuessing();
   };
 
@@ -92,6 +91,10 @@ export default class Challenge extends React.Component<IProps> {
   };
 
   handleTilePressed = (col: number, row: number, symbol: number): void => {
+    if (!this.startedGuessing) {
+      this.startedGuessing = true;
+      this.gameInfo.type === 'artist' ? this.startGuessing() : null;
+    }
     this.pattern[col][row] = symbol;
   };
 
@@ -189,7 +192,7 @@ export default class Challenge extends React.Component<IProps> {
               <View style={ styles.bottomLeftInfo } >
                 <View
                   style={ styles.taskInfoContainer } >
-                  <Text style={ styles.text } >{ this.gameInfo.taskName }</Text>
+                  <Text style={ styles.text } >{ this.gameInfo.type === 'artist' ? this.gameInfo.taskName : '?' }</Text>
                 </View>
 
                 <Text style={ styles.text } >{ this.gameInfo.pointsAwarded }</Text>
