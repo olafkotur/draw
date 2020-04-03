@@ -36,7 +36,6 @@ export default StyleSheet.create({
 
   guessContainer: {
     alignItems: 'center',
-    marginTop: 5
   },  
 
   cardContainer: {
