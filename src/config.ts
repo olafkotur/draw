@@ -1,4 +1,7 @@
+import { Platform } from 'react-native';
+
 export const theme = {
+  font: Platform.OS === 'ios' ? 'Courier' : 'monospace',
   primary: '#2b2d42', // Gunmetal
   secondary: '#9c89b8', // Lavendar
   tertiary: '#7e9181', // Green

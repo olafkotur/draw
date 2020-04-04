@@ -1,5 +1,4 @@
 import React from 'react';
-import * as Font from 'expo-font';
 import { View, StyleSheet } from 'react-native';
 import { theme } from './src/config';
 import Navigator from './src/services/navigation';
@@ -14,34 +13,13 @@ const styles = StyleSheet.create({
   },
 });
 
-interface IState {
-  isUpdating: boolean;
-}
-
 export default class App extends React.Component<{}> {
 
-  state: IState = {
-    isUpdating: true,
-  }
-
-  componentDidMount = () => {
-    Font.loadAsync({
-      'Courier': require('./assets/fonts/Courier.ttf')
-    }).then(() => this.setState({ isUpdating: false }));
-  }
-
   render() {
-    if (!this.state.isUpdating) {
-      return (
-        <View style={ styles.container } >
-          <Navigator />
-        </View>
-      );
-    }
-    else {
-      return (
-        <View />
-      );
-    }
+    return (
+      <View style={ styles.container } >
+        <Navigator />
+      </View>
+    );
   }
 };

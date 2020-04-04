@@ -106,6 +106,11 @@ export default class Challenge extends React.Component<IProps> {
     else if (guessData.value !== '-') {
       this.state.guessData[position].isLiked = !guessData.isLiked;
       this.setState({});
+
+      // Add the points to the user
+      this.playerData.artistPoints += this.gameInfo.pointsAwarded;
+      this.playerData.gamesPoints += 1;
+
       await delay(1000);
       this.props.navigation.replace('Victory', { winType: 'guessed', playerData: this.playerData, pattern: this.pattern });
     }

@@ -14,17 +14,17 @@
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "resizeMode": "cover",
+      "backgroundColor": "#2b2d42"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": [
-      "**/*"
+      "assets/fonts/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false
     },
     "description": ""
   }

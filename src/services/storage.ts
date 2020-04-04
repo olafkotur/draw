@@ -7,7 +7,7 @@ export const StorageService = {
   },
 
   retrieveSecurePlayerData: async (): Promise<IPlayerData> => {
-    const raw: string = await SecureStore.getItemAsync('userData');
+    const raw: string = await SecureStore.getItemAsync('playerData');
     return JSON.parse(raw);
   },
 };

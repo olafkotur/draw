@@ -1,11 +1,13 @@
 import React from 'react';
 import styles from './styles';
-import { View, SafeAreaView, StatusBar, TouchableOpacity } from 'react-native';
+import { StatusBar, TouchableOpacity } from 'react-native';
+import SafeAreaView from '../../components/SafeAreaView';
 import Text from '../../components/Text';
 import { IPlayerData } from '../../../models';
 import Score from '../../components/Score';
 import Canvas from '../../components/Canvas';
 import { theme } from '../../../config';
+import { StorageService } from '../../../services/storage';
 
 interface IProps {
   navigation: any;
@@ -17,6 +19,7 @@ export default class Victory extends React.Component<IProps> {
     this.playerData = this.props.navigation.getParam('playerData');
     this.winType = this.props.navigation.getParam('winType');
     this.pattern = this.props.navigation.getParam('pattern');
+    StorageService.storeSecurePlayerData(this.playerData);
   };
 
   static navigationOptions = {

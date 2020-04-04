@@ -8,12 +8,13 @@ export default StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'center',
+
   },
 
   scoreText: {
     fontSize: 20,
     color: theme.white,
-    paddingRight: 3
+    paddingRight: 3,
   },
 
   scoreGroup: {
@@ -23,6 +24,7 @@ export default StyleSheet.create({
 
   icon: {
     width: 20,
-    height: 20
+    height: 20,
+    alignSelf: 'center'
   }
 });

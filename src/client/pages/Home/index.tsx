@@ -53,7 +53,6 @@ export default class Home extends React.Component<IProps> {
   handleStartFreestyle = () => {
     this.props.navigation.replace('Freestyle');
   };
-  
 
   render(): JSX.Element {
     return (

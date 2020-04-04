@@ -74,7 +74,7 @@ export default StyleSheet.create({
     borderRadius: 15,
     marginTop: 5,
     paddingLeft: 20,
-    fontFamily: 'Courier',
+    fontFamily: theme.font
   },
 
   guessSendButton: {

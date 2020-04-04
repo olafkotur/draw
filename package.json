@@ -10,7 +10,6 @@
   "dependencies": {
     "delay": "^4.3.0",
     "expo": "~36.0.0",
-    "expo-font": "^8.1.0",
     "expo-secure-store": "^8.1.0",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",

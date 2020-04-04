@@ -3,6 +3,6 @@ import { theme } from '../../../config';
 
 export default StyleSheet.create({
   container: {
-    fontFamily: 'Courier'
+    fontFamily: theme.font
   },
 });
