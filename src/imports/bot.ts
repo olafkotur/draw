@@ -1,3 +1,16 @@
+export const guesses = {
+  heart: ['mcdonalds', 'mountain', 'bird', 'love', 'heart'],
+  mug: ['table', 'chair', 'container', 'beaker', 'cup', 'glass', 'mug'],
+  chair: ['table', 'seat', 'mug', 'glass', 'stool', 'chair'],
+  table: ['chair', 'seat', 'car', 'rectangle', 'phone', 'table'],
+  phone: ['table', 'mug', 'cup', 'chair', 'tablet', 'mobile', 'phone', 'iphone'],
+  door: ['tablet', 'phone', 'entrance', 'door', 'square'],
+  dog: ['table', 'cat', 'kitten', 'pet', 'dog'],
+  ball: ['mug', 'circle', 'love', 'heart', 'football', 'basketball', 'ball'],
+  fork: ['pole', 'stick', 'spear', 'fork', 'cutlery', 'wand'],
+  remote: ['rectangle', 'table', 'tablet', 'phone', 'mobile', 'iphone', 'remote' ]
+};
+
 export const drawings = {
   heart: [
     '0000000000000/0000000000000/0000000000000/0000000000000/0000000000000/0000000000000/0000000000000/0111000111000/0100101001000/0100010001000/0100000001000/0010000010000/0001000100000/0000101000000/0000010000000/0000000000000/0000000000000/0000000000000/',
@@ -34,14 +47,4 @@ export const drawings = {
     '00000000000/00000000000/00000000000/00000000000/10100000001/11100000010/11100000010/11111111110/00111111110/00110001100/00110001100/00000000000/00000000000/00000000000/00000000000/',
     '0000000000000/0000000000000/0000000000000/0000000000000/0000000000000/0000000000000/0000000000000/0100000000000/0110000010001/0010000001110/0010000001110/0011111111110/0011111111000/0011000011000/0011000011000/0000000000000/0000000000000/0000000000000/'
   ]
-};
-
-export const guesses = {
-  heart: ['mcdonalds', 'bird', 'love'],
-  mug: ['container', 'beaker', 'cup', 'glass'],
-  chair: ['table', 'seat', 'stool'],
-  table: ['chair'],
-  phone: ['table', 'tablet', 'mobile'],
-  door: ['tablet', 'phone', 'entrance'],
-  dog: ['table', 'cat', 'kitten', 'pet']
 };

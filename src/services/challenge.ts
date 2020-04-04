@@ -27,10 +27,13 @@ export const ChallengeService = {
 
   startGuessBot: (game: IGameInfo, previousGuesses: string[]): string => {
     const available: string[] = guesses[game.taskName].filter((guess: string) => !previousGuesses.includes(guess));
-    if (available.length >= 1) {
-      return available[0];
+    const index: number = HelperService.getRandomNumber(0, available.length);
+
+    if (available[index] === game.taskName && previousGuesses.length < 4) {
+      ChallengeService.startGuessBot(game, previousGuesses);
     }
-    return game.taskName;
+
+    return available[index];
   },
 
 };

@@ -79,6 +79,10 @@ export default class Challenge extends React.Component<IProps> {
   startGuessing = async (): Promise<Function> => {
     if (game.length - this.timeRemaining > HelperService.getRandomNumber(10, 20)) {
       const guess: string = ChallengeService.startGuessBot(this.gameInfo, this.previousGuesses);
+      if (guess === '') {
+        return;
+      }
+      
       this.previousGuesses.push(guess);
       this.setState({ guess });
       this.handleGuessSend();
