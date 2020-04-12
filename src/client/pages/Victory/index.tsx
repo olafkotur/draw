@@ -42,7 +42,10 @@ export default class Victory extends React.Component<IProps> {
     return (
       <SafeAreaView style={ styles.container } >
 
-        <StatusBar barStyle='light-content' />
+        <StatusBar 
+          translucent={ true }
+          barStyle='light-content'
+        />
 
         <Canvas
           pattern={ this.pattern }

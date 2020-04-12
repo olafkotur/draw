@@ -77,17 +77,18 @@ export default class Challenge extends React.Component<IProps> {
   };
 
   startGuessing = async (): Promise<Function> => {
-    if (game.length - this.timeRemaining > HelperService.getRandomNumber(10, 20)) {
+    if (game.length - this.timeRemaining > HelperService.getRandomNumber(10, 15)) {
       const guess: string = ChallengeService.startGuessBot(this.gameInfo, this.previousGuesses);
       if (guess === '') {
         return;
       }
-      
+
       this.previousGuesses.push(guess);
       this.setState({ guess });
       this.handleGuessSend();
+      await delay(HelperService.getRandomNumber(3000, 8000));
     }
-    await delay(HelperService.getRandomNumber(3000, 8000));
+    await (delay(1000));
     return this.startGuessing();
   };
 
@@ -149,7 +150,10 @@ export default class Challenge extends React.Component<IProps> {
 
             <SafeAreaView style={ styles.container } >
 
-              <StatusBar barStyle='light-content' />
+              <StatusBar 
+                translucent={ true }
+                barStyle='light-content'
+              />
 
               <View style={{ display: this.state.isCanvasHidden ? 'none' : 'flex' }}>
                 <Canvas

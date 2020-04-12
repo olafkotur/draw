@@ -64,7 +64,10 @@ export default class Home extends React.Component<IProps> {
 
           <SafeAreaView style={ styles.container } >
 
-            <StatusBar barStyle='light-content' />
+            <StatusBar 
+              translucent={ true }
+              barStyle='light-content'
+            />
 
             <Canvas
               pattern={ this.logoPattern }

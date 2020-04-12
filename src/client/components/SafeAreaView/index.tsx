@@ -9,6 +9,7 @@ interface IProps extends Partial<RNSafeAreaView> {
 export default class SafeAreaView extends React.Component<IProps> {
   
   render(): JSX.Element {
+
     return (
       <RNSafeAreaView 
         { ...RNSafeAreaView }

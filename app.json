@@ -21,11 +21,16 @@
       "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": [
-      "assets/fonts/*"
+      "assets/*"
     ],
     "ios": {
       "supportsTablet": false
     },
-    "description": ""
+    "description": "",
+    "githubUrl": "https://github.com/olafkotur/draw",
+    "android": {
+      "package": "com.olafkotur.blockdraw",
+      "versionCode": 1
+    }
   }
 }
