@@ -1,4 +1,5 @@
 # Draw: React Native
+Download: https://play.google.com/store/apps/details?id=com.olafkotur.blockdraw
 
 ## Pre-setup
 * You must install expo tools before setting up the project, assuming you have `npm` or `yarn` installed
